@@ -1,0 +1,1156 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "53542f70-8134-43d5-bad9-d7d9073e5621",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "f13a0c5e-60bb-4570-a609-4e69f3ba2407",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df=pd.read_csv(\"spotify_millsongdata.csv\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "05462355-24e2-43e0-8d17-07d8c0eb3183",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>artist</th>\n",
+       "      <th>song</th>\n",
+       "      <th>link</th>\n",
+       "      <th>text</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>ABBA</td>\n",
+       "      <td>Ahe's My Kind Of Girl</td>\n",
+       "      <td>/a/abba/ahes+my+kind+of+girl_20598417.html</td>\n",
+       "      <td>Look at her face, it's a wonderful face  \\r\\nA...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>ABBA</td>\n",
+       "      <td>Andante, Andante</td>\n",
+       "      <td>/a/abba/andante+andante_20002708.html</td>\n",
+       "      <td>Take it easy with me, please  \\r\\nTouch me gen...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>ABBA</td>\n",
+       "      <td>As Good As New</td>\n",
+       "      <td>/a/abba/as+good+as+new_20003033.html</td>\n",
+       "      <td>I'll never know why I had to go  \\r\\nWhy I had...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>ABBA</td>\n",
+       "      <td>Bang</td>\n",
+       "      <td>/a/abba/bang_20598415.html</td>\n",
+       "      <td>Making somebody happy is a question of give an...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>ABBA</td>\n",
+       "      <td>Bang-A-Boomerang</td>\n",
+       "      <td>/a/abba/bang+a+boomerang_20002668.html</td>\n",
+       "      <td>Making somebody happy is a question of give an...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "  artist                   song                                        link  \\\n",
+       "0   ABBA  Ahe's My Kind Of Girl  /a/abba/ahes+my+kind+of+girl_20598417.html   \n",
+       "1   ABBA       Andante, Andante       /a/abba/andante+andante_20002708.html   \n",
+       "2   ABBA         As Good As New        /a/abba/as+good+as+new_20003033.html   \n",
+       "3   ABBA                   Bang                  /a/abba/bang_20598415.html   \n",
+       "4   ABBA       Bang-A-Boomerang      /a/abba/bang+a+boomerang_20002668.html   \n",
+       "\n",
+       "                                                text  \n",
+       "0  Look at her face, it's a wonderful face  \\r\\nA...  \n",
+       "1  Take it easy with me, please  \\r\\nTouch me gen...  \n",
+       "2  I'll never know why I had to go  \\r\\nWhy I had...  \n",
+       "3  Making somebody happy is a question of give an...  \n",
+       "4  Making somebody happy is a question of give an...  "
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.head(5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "7b3e00a2-5fa4-455c-aa7b-03d663560e4c",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>artist</th>\n",
+       "      <th>song</th>\n",
+       "      <th>link</th>\n",
+       "      <th>text</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>57645</th>\n",
+       "      <td>Ziggy Marley</td>\n",
+       "      <td>Good Old Days</td>\n",
+       "      <td>/z/ziggy+marley/good+old+days_10198588.html</td>\n",
+       "      <td>Irie days come on play  \\r\\nLet the angels fly...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>57646</th>\n",
+       "      <td>Ziggy Marley</td>\n",
+       "      <td>Hand To Mouth</td>\n",
+       "      <td>/z/ziggy+marley/hand+to+mouth_20531167.html</td>\n",
+       "      <td>Power to the workers  \\r\\nMore power  \\r\\nPowe...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>57647</th>\n",
+       "      <td>Zwan</td>\n",
+       "      <td>Come With Me</td>\n",
+       "      <td>/z/zwan/come+with+me_20148981.html</td>\n",
+       "      <td>all you need  \\r\\nis something i'll believe  \\...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>57648</th>\n",
+       "      <td>Zwan</td>\n",
+       "      <td>Desire</td>\n",
+       "      <td>/z/zwan/desire_20148986.html</td>\n",
+       "      <td>northern star  \\r\\nam i frightened  \\r\\nwhere ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>57649</th>\n",
+       "      <td>Zwan</td>\n",
+       "      <td>Heartsong</td>\n",
+       "      <td>/z/zwan/heartsong_20148991.html</td>\n",
+       "      <td>come in  \\r\\nmake yourself at home  \\r\\ni'm a ...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "             artist           song  \\\n",
+       "57645  Ziggy Marley  Good Old Days   \n",
+       "57646  Ziggy Marley  Hand To Mouth   \n",
+       "57647          Zwan   Come With Me   \n",
+       "57648          Zwan         Desire   \n",
+       "57649          Zwan      Heartsong   \n",
+       "\n",
+       "                                              link  \\\n",
+       "57645  /z/ziggy+marley/good+old+days_10198588.html   \n",
+       "57646  /z/ziggy+marley/hand+to+mouth_20531167.html   \n",
+       "57647           /z/zwan/come+with+me_20148981.html   \n",
+       "57648                 /z/zwan/desire_20148986.html   \n",
+       "57649              /z/zwan/heartsong_20148991.html   \n",
+       "\n",
+       "                                                    text  \n",
+       "57645  Irie days come on play  \\r\\nLet the angels fly...  \n",
+       "57646  Power to the workers  \\r\\nMore power  \\r\\nPowe...  \n",
+       "57647  all you need  \\r\\nis something i'll believe  \\...  \n",
+       "57648  northern star  \\r\\nam i frightened  \\r\\nwhere ...  \n",
+       "57649  come in  \\r\\nmake yourself at home  \\r\\ni'm a ...  "
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.tail(5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "e6d66457-afb0-4e15-b0f3-4dabc29186eb",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(57650, 4)"
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.shape"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "1e2ca108-1f12-4983-963d-dbb751e4a0ca",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "artist    0\n",
+       "song      0\n",
+       "link      0\n",
+       "text      0\n",
+       "dtype: int64"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.isnull().sum()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "0a4b4860-eb03-4b57-a9b3-c9ddc102884a",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df=df.drop('link',axis=1).reset_index(drop=True)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "f1ac75ab-95d2-44d4-a943-8aec47e2de35",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>artist</th>\n",
+       "      <th>song</th>\n",
+       "      <th>text</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>ABBA</td>\n",
+       "      <td>Ahe's My Kind Of Girl</td>\n",
+       "      <td>Look at her face, it's a wonderful face  \\r\\nA...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>ABBA</td>\n",
+       "      <td>Andante, Andante</td>\n",
+       "      <td>Take it easy with me, please  \\r\\nTouch me gen...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>ABBA</td>\n",
+       "      <td>As Good As New</td>\n",
+       "      <td>I'll never know why I had to go  \\r\\nWhy I had...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>ABBA</td>\n",
+       "      <td>Bang</td>\n",
+       "      <td>Making somebody happy is a question of give an...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>ABBA</td>\n",
+       "      <td>Bang-A-Boomerang</td>\n",
+       "      <td>Making somebody happy is a question of give an...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>ABBA</td>\n",
+       "      <td>Burning My Bridges</td>\n",
+       "      <td>Well, you hoot and you holler and you make me ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>ABBA</td>\n",
+       "      <td>Cassandra</td>\n",
+       "      <td>Down in the street they're all singing and sho...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>ABBA</td>\n",
+       "      <td>Chiquitita</td>\n",
+       "      <td>Chiquitita, tell me what's wrong  \\r\\nYou're e...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>ABBA</td>\n",
+       "      <td>Crazy World</td>\n",
+       "      <td>I was out with the morning sun  \\r\\nCouldn't s...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>ABBA</td>\n",
+       "      <td>Crying Over You</td>\n",
+       "      <td>I'm waitin' for you baby  \\r\\nI'm sitting all ...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "  artist                   song  \\\n",
+       "0   ABBA  Ahe's My Kind Of Girl   \n",
+       "1   ABBA       Andante, Andante   \n",
+       "2   ABBA         As Good As New   \n",
+       "3   ABBA                   Bang   \n",
+       "4   ABBA       Bang-A-Boomerang   \n",
+       "5   ABBA     Burning My Bridges   \n",
+       "6   ABBA              Cassandra   \n",
+       "7   ABBA             Chiquitita   \n",
+       "8   ABBA            Crazy World   \n",
+       "9   ABBA        Crying Over You   \n",
+       "\n",
+       "                                                text  \n",
+       "0  Look at her face, it's a wonderful face  \\r\\nA...  \n",
+       "1  Take it easy with me, please  \\r\\nTouch me gen...  \n",
+       "2  I'll never know why I had to go  \\r\\nWhy I had...  \n",
+       "3  Making somebody happy is a question of give an...  \n",
+       "4  Making somebody happy is a question of give an...  \n",
+       "5  Well, you hoot and you holler and you make me ...  \n",
+       "6  Down in the street they're all singing and sho...  \n",
+       "7  Chiquitita, tell me what's wrong  \\r\\nYou're e...  \n",
+       "8  I was out with the morning sun  \\r\\nCouldn't s...  \n",
+       "9  I'm waitin' for you baby  \\r\\nI'm sitting all ...  "
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.head(10)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "1127ea66-2c82-41ad-89ec-cfa68ee86a2a",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "\"Look at her face, it's a wonderful face  \\r\\nAnd it means something special to me  \\r\\nLook at the way that she smiles when she sees me  \\r\\nHow lucky can one fellow be?  \\r\\n  \\r\\nShe's just my kind of girl, she makes me feel fine  \\r\\nWho could ever believe that she could be mine?  \\r\\nShe's just my kind of girl, without her I'm blue  \\r\\nAnd if she ever leaves me what could I do, what could I do?  \\r\\n  \\r\\nAnd when we go for a walk in the park  \\r\\nAnd she holds me and squeezes my hand  \\r\\nWe'll go on walking for hours and talking  \\r\\nAbout all the things that we plan  \\r\\n  \\r\\nShe's just my kind of girl, she makes me feel fine  \\r\\nWho could ever believe that she could be mine?  \\r\\nShe's just my kind of girl, without her I'm blue  \\r\\nAnd if she ever leaves me what could I do, what could I do?\\r\\n\\r\\n\""
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df['text'][0]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "6dc75171-0d91-42fe-af53-34cc88c3679f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df=df.sample(5000)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "id": "62cbc56c-64cd-4a03-aa18-79fbfd2f8437",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(5000, 3)"
+      ]
+     },
+     "execution_count": 21,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.shape"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "c584fb32-bd22-4d20-8a88-d3527842f00d",
+   "metadata": {},
+   "source": [
+    "Text Cleaning/Text PreProcessing"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "id": "8c3c1c85-4348-4b1a-9dc6-debed1d2c8c5",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df['text']=df['text'].str.lower().replace(r'^\\w\\s',' ').replace(r'\\n',' ',regex=True)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "id": "ea60b5cf-b9db-466a-9c30-62302650f401",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>artist</th>\n",
+       "      <th>song</th>\n",
+       "      <th>text</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>28126</th>\n",
+       "      <td>Cliff Richard</td>\n",
+       "      <td>Moving In</td>\n",
+       "      <td>i'm thinking 'bout moving in,  \\r commit mysel...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>20907</th>\n",
+       "      <td>Violent Femmes</td>\n",
+       "      <td>Jesus Of Rio</td>\n",
+       "      <td>christ the redeemer towering high over rio  \\r...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>44847</th>\n",
+       "      <td>Natalie Cole</td>\n",
+       "      <td>Inseperable</td>\n",
+       "      <td>inseperable, that's how we'll always be  \\r in...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>53048</th>\n",
+       "      <td>Thin Lizzy</td>\n",
+       "      <td>Here I Go Again</td>\n",
+       "      <td>so we packed our bags and headed for the north...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>33283</th>\n",
+       "      <td>Gary Numan</td>\n",
+       "      <td>Fold</td>\n",
+       "      <td>i fold your letter  \\r all lies, all cold  \\r ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7210</th>\n",
+       "      <td>Great Big Sea</td>\n",
+       "      <td>Demasduit's Dream</td>\n",
+       "      <td>i dreamt i saw a woman  \\r standing by the str...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>54264</th>\n",
+       "      <td>Ufo</td>\n",
+       "      <td>Rock Bottom</td>\n",
+       "      <td>seventeen a nature's queen, know what i mean  ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>26374</th>\n",
+       "      <td>Bread</td>\n",
+       "      <td>Could I</td>\n",
+       "      <td>i could i could keep you company could  \\r i c...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>19248</th>\n",
+       "      <td>Thin Lizzy</td>\n",
+       "      <td>Downtown Sundown</td>\n",
+       "      <td>if you want your freedom  \\r there is nothing ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>46295</th>\n",
+       "      <td>Notorious B.I.G.</td>\n",
+       "      <td>B.I.G. Live In Jamaica (Intro)</td>\n",
+       "      <td>[jamaican host]  \\r ladies and gentlemen  \\r w...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>5000 rows × 3 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                 artist                            song  \\\n",
+       "28126     Cliff Richard                       Moving In   \n",
+       "20907    Violent Femmes                    Jesus Of Rio   \n",
+       "44847      Natalie Cole                     Inseperable   \n",
+       "53048        Thin Lizzy                 Here I Go Again   \n",
+       "33283        Gary Numan                            Fold   \n",
+       "...                 ...                             ...   \n",
+       "7210      Great Big Sea               Demasduit's Dream   \n",
+       "54264               Ufo                     Rock Bottom   \n",
+       "26374             Bread                         Could I   \n",
+       "19248        Thin Lizzy                Downtown Sundown   \n",
+       "46295  Notorious B.I.G.  B.I.G. Live In Jamaica (Intro)   \n",
+       "\n",
+       "                                                    text  \n",
+       "28126  i'm thinking 'bout moving in,  \\r commit mysel...  \n",
+       "20907  christ the redeemer towering high over rio  \\r...  \n",
+       "44847  inseperable, that's how we'll always be  \\r in...  \n",
+       "53048  so we packed our bags and headed for the north...  \n",
+       "33283  i fold your letter  \\r all lies, all cold  \\r ...  \n",
+       "...                                                  ...  \n",
+       "7210   i dreamt i saw a woman  \\r standing by the str...  \n",
+       "54264  seventeen a nature's queen, know what i mean  ...  \n",
+       "26374  i could i could keep you company could  \\r i c...  \n",
+       "19248  if you want your freedom  \\r there is nothing ...  \n",
+       "46295  [jamaican host]  \\r ladies and gentlemen  \\r w...  \n",
+       "\n",
+       "[5000 rows x 3 columns]"
+      ]
+     },
+     "execution_count": 24,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "id": "f2d5d72a-f6fa-4922-b8e9-e4b1485e6244",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>artist</th>\n",
+       "      <th>song</th>\n",
+       "      <th>text</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>7210</th>\n",
+       "      <td>Great Big Sea</td>\n",
+       "      <td>Demasduit's Dream</td>\n",
+       "      <td>i dreamt i saw a woman  \\r standing by the str...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>54264</th>\n",
+       "      <td>Ufo</td>\n",
+       "      <td>Rock Bottom</td>\n",
+       "      <td>seventeen a nature's queen, know what i mean  ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>26374</th>\n",
+       "      <td>Bread</td>\n",
+       "      <td>Could I</td>\n",
+       "      <td>i could i could keep you company could  \\r i c...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>19248</th>\n",
+       "      <td>Thin Lizzy</td>\n",
+       "      <td>Downtown Sundown</td>\n",
+       "      <td>if you want your freedom  \\r there is nothing ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>46295</th>\n",
+       "      <td>Notorious B.I.G.</td>\n",
+       "      <td>B.I.G. Live In Jamaica (Intro)</td>\n",
+       "      <td>[jamaican host]  \\r ladies and gentlemen  \\r w...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                 artist                            song  \\\n",
+       "7210      Great Big Sea               Demasduit's Dream   \n",
+       "54264               Ufo                     Rock Bottom   \n",
+       "26374             Bread                         Could I   \n",
+       "19248        Thin Lizzy                Downtown Sundown   \n",
+       "46295  Notorious B.I.G.  B.I.G. Live In Jamaica (Intro)   \n",
+       "\n",
+       "                                                    text  \n",
+       "7210   i dreamt i saw a woman  \\r standing by the str...  \n",
+       "54264  seventeen a nature's queen, know what i mean  ...  \n",
+       "26374  i could i could keep you company could  \\r i c...  \n",
+       "19248  if you want your freedom  \\r there is nothing ...  \n",
+       "46295  [jamaican host]  \\r ladies and gentlemen  \\r w...  "
+      ]
+     },
+     "execution_count": 25,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.tail(5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "id": "8b8bd3a8-46c7-45c8-8bb9-2be3c4bc1121",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import nltk\n",
+    "from nltk.stem.porter import PorterStemmer"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "id": "135acb84-2825-4e2c-9a48-ace911227d70",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "stemmer=PorterStemmer()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 45,
+   "id": "a5bbad75-7024-48b5-8959-2d5a247dba4b",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def token(txt):\n",
+    "    token = nltk.word_tokenize(txt)\n",
+    "    a = [stemmer.stem(w) for w in token]\n",
+    "    return \" \".join(a)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 49,
+   "id": "5611a93b-04d3-4ecc-bad7-c1736b76c46d",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[nltk_data] Downloading package punkt to\n",
+      "[nltk_data]     C:\\Users\\Niharika/nltk_data...\n",
+      "[nltk_data]   Package punkt is already up-to-date!\n",
+      "[nltk_data] Downloading package punkt_tab to\n",
+      "[nltk_data]     C:\\Users\\Niharika/nltk_data...\n",
+      "[nltk_data]   Unzipping tokenizers\\punkt_tab.zip.\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 49,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import nltk\n",
+    "nltk.download('punkt')\n",
+    "nltk.download('punkt_tab')\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 50,
+   "id": "d660a841-65d1-498c-b39d-8f3e24f6a235",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'you are beauti , beauti'"
+      ]
+     },
+     "execution_count": 50,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "token(\"you are beautiful,beauty\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 54,
+   "id": "dc8beb22-35e8-43d2-8d8b-402bee1050e1",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "28126    i 'm think 'bout move in , commit myself to yo...\n",
+       "20907    christ the redeem tower high over rio rio de j...\n",
+       "44847    inseper , that 's how we 'll alway be inseper ...\n",
+       "53048    so we pack our bag and head for the north sea ...\n",
+       "33283    i fold your letter all lie , all cold i fold m...\n",
+       "                               ...                        \n",
+       "7210     i dreamt i saw a woman stand by the strand wai...\n",
+       "54264    seventeen a natur 's queen , know what i mean ...\n",
+       "26374    i could i could keep you compani could i could...\n",
+       "19248    if you want your freedom there is noth plan if...\n",
+       "46295    [ jamaican host ] ladi and gentlemen we 're go...\n",
+       "Name: text, Length: 5000, dtype: object"
+      ]
+     },
+     "execution_count": 54,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df['text'].apply(lambda x: token(x))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 51,
+   "id": "f42deef3-98b7-4eda-8d01-1039c8be23c2",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.feature_extraction.text import TfidfVectorizer\n",
+    "from sklearn.metrics.pairwise import cosine_similarity"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 64,
+   "id": "1d0402a5-3d41-4817-b3fd-ba7fe802a9e8",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "tfidvector = TfidfVectorizer(analyzer='word',stop_words='english')\n",
+    "matrix = tfidvector.fit_transform(df['text'])\n",
+    "similer=cosine_similarity(matrix)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 65,
+   "id": "90a71d4e-99c9-4035-a572-864e5635540f",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([1.00000000e+00, 2.87673989e-03, 9.87953527e-03, ...,\n",
+       "       4.21061856e-02, 1.85227806e-02, 6.77007112e-04])"
+      ]
+     },
+     "execution_count": 65,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "similer[0]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 96,
+   "id": "9b06f62b-7e8a-40a9-b255-0fe9490f7660",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>artist</th>\n",
+       "      <th>song</th>\n",
+       "      <th>text</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "Empty DataFrame\n",
+       "Columns: [artist, song, text]\n",
+       "Index: []"
+      ]
+     },
+     "execution_count": 96,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df[df['song'] == 'Crying Over You']"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "148bba68-8f7e-48bf-9c53-e4c6791d004e",
+   "metadata": {},
+   "source": [
+    "Recommender Function"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 89,
+   "id": "05e2f32b-70da-4817-9d9a-fdff0bfb45c0",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def recommender(song_name):\n",
+    "    filtered_df = df[df['song'] == song_name]\n",
+    "    \n",
+    "    # Check if the song exists\n",
+    "    if filtered_df.empty:\n",
+    "        print(\"Song not found in dataset.\")\n",
+    "        return []\n",
+    "\n",
+    "    idx = filtered_df.index[0]\n",
+    "\n",
+    "    # Ensure idx is within the valid range of 'similer'\n",
+    "    if idx >= len(similer):\n",
+    "        print(\"Index out of range. The dataset and similarity matrix may be mismatched.\")\n",
+    "        return []\n",
+    "\n",
+    "    # Sorting the similarity scores in descending order\n",
+    "    distance = sorted(list(enumerate(similer[idx])), reverse=True, key=lambda x: x[1])\n",
+    "\n",
+    "    song = []\n",
+    "    for s_id in distance[1:5]:  # Getting the top 4 recommendations\n",
+    "        song.append(df.iloc[s_id[0]]['song'])  # Fixed the syntax error\n",
+    "\n",
+    "    return song\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 91,
+   "id": "7410ea54-1f5d-4eae-82b3-b4ef2f623c85",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "           artist          song  \\\n",
+      "18751  Status Quo  In Your Eyes   \n",
+      "\n",
+      "                                                    text  \n",
+      "18751  doesn't she look so well  \\r with her long bla...  \n"
+     ]
+    }
+   ],
+   "source": [
+    "print(df[df['song'] == \"In Your Eyes\"])\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 92,
+   "id": "d33511b8-5e8a-4f7a-9ab9-d9d12f86c9db",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "DF Shape: (5000, 3)\n",
+      "Similarity Matrix Size: 5000\n"
+     ]
+    }
+   ],
+   "source": [
+    "\n",
+    "print(\"DF Shape:\", df.shape)\n",
+    "print(\"Similarity Matrix Size:\", len(similer))\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 93,
+   "id": "7769108e-8f22-474a-8d7f-2e90cb6c5d52",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df = df.reset_index(drop=True)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 94,
+   "id": "d069acd8-f506-43ef-88ca-1019e1f68e16",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Index: 3351\n",
+      "Top Recommendations: ['The Dream Is Over', 'Dream On', \"I Don't Have To Sleep To Dream\", 'Dream Dancing']\n"
+     ]
+    }
+   ],
+   "source": [
+    "song_name = \"In Your Eyes\"\n",
+    "filtered_df = df[df['song'] == song_name]\n",
+    "if filtered_df.empty:\n",
+    "    print(\"Song not found.\")\n",
+    "else:\n",
+    "    idx = filtered_df.index[0]\n",
+    "    print(\"Index:\", idx)\n",
+    "\n",
+    "    if idx >= len(similer):\n",
+    "        print(\"Index out of range!\")\n",
+    "    else:\n",
+    "        print(\"Top Recommendations:\", recommender(song_name))\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 100,
+   "id": "888f4b7b-4f7e-45bb-a13d-2227a2ca1508",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def recommendation(song_name):\n",
+    "    filtered_df = df[df['song'] == song_name]\n",
+    "    \n",
+    "    # Check if the song exists in the dataset\n",
+    "    if filtered_df.empty:\n",
+    "        print(f\"Song '{song_name}' not found in dataset.\")\n",
+    "        return []\n",
+    "    \n",
+    "    idx = filtered_df.index[0]\n",
+    "\n",
+    "    # Check if idx is within the range of the similarity matrix\n",
+    "    if idx >= len(similarity):\n",
+    "        print(\"Index out of range. The dataset and similarity matrix may be mismatched.\")\n",
+    "        return []\n",
+    "\n",
+    "    # Get similar songs\n",
+    "    distance = sorted(list(enumerate(similarity[idx])), reverse=True, key=lambda x: x[1])\n",
+    "\n",
+    "    recommended_songs = []\n",
+    "    for s_id in distance[1:5]:  # Get top 4 recommendations\n",
+    "        recommended_songs.append(df.iloc[s_id[0]]['song'])\n",
+    "\n",
+    "    return recommended_songs\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 101,
+   "id": "e0a380bc-83c4-4147-a6a1-0da622902dd1",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Empty DataFrame\n",
+      "Columns: [artist, song, text]\n",
+      "Index: []\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(df[df['song'] == \"Crying Over You\"])\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 98,
+   "id": "612cc12a-9ad3-4d3f-abe3-5986dc7efac2",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pickle\n",
+    "pickle.dump(similarity,open('similarity.pkl','wb'))\n",
+    "pickle.dump(df,open('df.pkl','wb'))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "820928b5-5ba9-4cd8-84a8-219aeaf318f7",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
